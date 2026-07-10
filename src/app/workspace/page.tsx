@@ -14,6 +14,9 @@ import QuizGenerator from "../../components/QuizGenerator";
 import SlideGenerator from "../../components/SlideGenerator";
 import ReviewGenerator from "../../components/ReviewGenerator";
 import CitationGraph from "../../components/CitationGraph";
+import SummaryGenerator from "../../components/SummaryGenerator";
+import CitationGenerator from "../../components/CitationGenerator";
+import ResearchAssistant from "../../components/ResearchAssistant";
 import { 
   Sparkles, 
   ChevronRight, 
@@ -24,7 +27,8 @@ import {
   Sliders, 
   GitFork, 
   FileEdit,
-  Binary
+  Binary,
+  FileText
 } from "lucide-react";
 
 function WorkspaceContent() {
@@ -35,7 +39,7 @@ function WorkspaceContent() {
   const [library, setLibrary] = useState<Paper[]>([]);
   const [activePaper, setActivePaper] = useState<Paper | null>(null);
   const [leftWidth, setLeftWidth] = useState(45); // percentage for left panel
-  const [activeTab, setActiveTab] = useState<"chat" | "equations" | "quiz" | "slides" | "review" | "network">("chat");
+  const [activeTab, setActiveTab] = useState<"chat" | "summary" | "citations" | "equations" | "quiz" | "slides" | "review" | "network" | "assistant">("chat");
   const [selectedText, setSelectedText] = useState("");
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -103,11 +107,14 @@ function WorkspaceContent() {
 
   const tabs = [
     { id: "chat", name: "AI Chat", icon: MessageSquare },
+    { id: "summary", name: "AI Summary", icon: FileText },
+    { id: "citations", name: "Citation Gen", icon: BookOpen },
     { id: "equations", name: "Equation Explainer", icon: Binary },
     { id: "quiz", name: "Quiz Generator", icon: HelpCircle },
     { id: "slides", name: "Slide Builder", icon: Sliders },
     { id: "review", name: "Literature Review", icon: FileEdit },
-    { id: "network", name: "Citation Graph", icon: GitFork }
+    { id: "network", name: "Citation Graph", icon: GitFork },
+    { id: "assistant", name: "AI Assistant", icon: Sparkles }
   ] as const;
 
   return (
@@ -226,6 +233,21 @@ function WorkspaceContent() {
             )}
             {activeTab === "review" && (
               <ReviewGenerator 
+                paper={activePaper} 
+              />
+            )}
+            {activeTab === "summary" && (
+              <SummaryGenerator 
+                paper={activePaper} 
+              />
+            )}
+            {activeTab === "citations" && (
+              <CitationGenerator 
+                paper={activePaper} 
+              />
+            )}
+            {activeTab === "assistant" && (
+              <ResearchAssistant 
                 paper={activePaper} 
               />
             )}
